@@ -8,7 +8,7 @@ import (
 
 func main() {
 	//fmt.Println(os.Getenv("path"))
-	fmt.Println(os.Getenv("path"))
+
 	srv := core.NewServer()
 	srv.AddRouter("/test", test)
 	srv.Start(10001)
