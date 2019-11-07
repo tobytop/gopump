@@ -5,28 +5,11 @@ import (
 	"gopump/core"
 )
 
-type Car struct {
-	Weight int
-	Name   string
-}
-
-type RedCar struct {
-	Car
-}
-
-func (c *Car) String() {
-	fmt.Println("lala")
-}
-
 func main() {
 	//fmt.Println(os.Getenv("path"))
 	srv := core.NewServer()
 	srv.AddRouter("/test", test)
 	srv.Start(10001)
-	// var a RedCar
-	// a.Weight = 10
-	// a.Name = "ttt"
-	// a.String()
 
 }
 
