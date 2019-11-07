@@ -1,9 +1,7 @@
 package main
 
 import (
-	"fmt"
 	"gopump/core"
-	"os"
 )
 
 func main() {
