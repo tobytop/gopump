@@ -62,8 +62,8 @@ func (d *Dispatcher) handler(message *message.Context) {
 }
 
 func (d *Dispatcher) sendMessage(s *Sender) {
-	d.mutex.Lock()
-	defer d.mutex.Unlock()
+	//d.mutex.Lock()
+	//defer d.mutex.Unlock()
 	for _, v := range s.Reqs {
 		if a, ok := d.Acceptors[v]; ok {
 			a.WriteMessage(s.Context)
