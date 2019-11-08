@@ -49,7 +49,7 @@ func (d *Dispatcher) sendloop() {
 func (d *Dispatcher) handler(message *message.Context) {
 	d.mutex.Lock()
 	sender := &Sender{
-		Reqs:    make([]*http.Request, 0),
+		Reqs:    []*http.Request{},
 		Context: message,
 	}
 	for k, _ := range d.Acceptors {
