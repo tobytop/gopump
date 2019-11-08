@@ -19,7 +19,7 @@ type Dispatcher struct {
 	mutex      sync.Mutex
 	handleFunc HandleFunc
 	Acceptors  map[*http.Request]*Acceptor
-	sendchan   chan map[*http.Request]*message.Context
+	sendChan   chan map[*http.Request]*message.Context
 }
 
 func (d *Dispatcher) findloop() {
@@ -29,7 +29,7 @@ func (d *Dispatcher) findloop() {
 		messages = d.getMessage()
 
 		if len(messages) > 0 {
-			d.sendchan <- messages
+			d.sendChan <- messages
 			messages = make(map[*http.Request]*message.Context)
 		}
 	}
@@ -38,7 +38,7 @@ func (d *Dispatcher) findloop() {
 func (d *Dispatcher) sendloop() {
 	//var messages map[*http.Request]*message.Context
 	for {
-		messages := <-d.sendchan
+		messages := <-d.sendChan
 		for r, v := range messages {
 			v.Req = r
 			d.handler(v)
@@ -92,7 +92,7 @@ func NewDispatcher(path string, handleFunc HandleFunc) (d *Dispatcher) {
 		path:       path,
 		handleFunc: handleFunc,
 		Acceptors:  make(map[*http.Request]*Acceptor),
-		sendchan:   make(chan map[*http.Request]*message.Context, 1000),
+		sendChan:   make(chan map[*http.Request]*message.Context, 1000),
 	}
 
 	go d.findloop()
