@@ -4,6 +4,7 @@ import (
 	"gopump/common"
 	"gopump/message"
 	"sync"
+	"sync/atomic"
 
 	"github.com/gorilla/websocket"
 )
@@ -15,7 +16,7 @@ type Acceptor struct {
 	inChan    chan *message.Context
 	outChan   chan *message.Context
 	closeChan chan byte
-	isClosed  bool
+	isClosed  int32
 }
 
 func NewAcceptor(connID uint64, wsSocket *websocket.Conn) (acceptor *Acceptor) {
@@ -25,7 +26,7 @@ func NewAcceptor(connID uint64, wsSocket *websocket.Conn) (acceptor *Acceptor) {
 		inChan:    make(chan *message.Context, 1000),
 		outChan:   make(chan *message.Context, 1000),
 		closeChan: make(chan byte),
-		isClosed:  false,
+		isClosed:  0,
 	}
 	go acceptor.readloop()
 	go acceptor.writeloop()
@@ -84,20 +85,14 @@ CLOSED:
 func (a *Acceptor) close() {
 	a.wsSocket.Close()
 
-	a.mutex.Lock()
-	defer a.mutex.Unlock()
-
 	a.closeChan <- byte(1)
 
-	if !a.isClosed {
-		a.isClosed = true
+	if a.isClosed == 0 {
+		atomic.StoreInt32(&a.isClosed, 1)
 	}
 }
 
 func (a *Acceptor) ReadMessage() (message *message.Context, err error) {
-	// a.mutex.Lock()
-	// defer a.mutex.Unlock()
-
 	select {
 	case message = <-a.inChan:
 	case <-a.closeChan:

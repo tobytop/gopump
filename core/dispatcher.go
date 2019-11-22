@@ -77,7 +77,7 @@ func (d *Dispatcher) getMessage() (msg map[*http.Request]*message.Context) {
 
 	msg = make(map[*http.Request]*message.Context)
 	for r, a := range d.Acceptors {
-		if a.isClosed {
+		if a.isClosed == 1 {
 			delete(d.Acceptors, r)
 		} else if m, err := a.ReadMessage(); err == nil && m != nil {
 			msg[r] = m

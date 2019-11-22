@@ -47,7 +47,7 @@ func (s *Server) handleConnect(resp http.ResponseWriter, req *http.Request) {
 
 	s.Dispatchers[req.URL.Path].Acceptors[req] = a
 	for r, a := range s.Dispatchers[req.URL.Path].Acceptors {
-		if a.isClosed {
+		if a.isClosed == 1 {
 			delete(s.Dispatchers[req.URL.Path].Acceptors, r)
 		}
 	}
