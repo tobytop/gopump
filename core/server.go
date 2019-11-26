@@ -1,6 +1,7 @@
 package core
 
 import (
+	"flag"
 	"net"
 	"net/http"
 	"strconv"
@@ -87,8 +88,9 @@ func (s *Server) Start(port int) {
 		listener net.Listener
 		err      error
 	)
+	addr := flag.String("addr", ":"+strconv.Itoa(port), "server address")
 	// 监听端口
-	if listener, err = net.Listen("tcp", ":"+strconv.Itoa(port)); err != nil {
+	if listener, err = net.Listen("tcp", *addr); err != nil {
 		return
 	}
 
