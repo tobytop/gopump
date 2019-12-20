@@ -5,7 +5,7 @@ import (
 	"sync"
 	"time"
 
-	"github.com/tobytop/message"
+	"github.com/tobytop/gopump/message"
 )
 
 type HandleFunc func(s *Sender)
