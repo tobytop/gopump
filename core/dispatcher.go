@@ -1,10 +1,11 @@
 package core
 
 import (
-	"gopump/message"
 	"net/http"
 	"sync"
 	"time"
+
+	"github.com/tobytop/message"
 )
 
 type HandleFunc func(s *Sender)

@@ -1,10 +1,11 @@
 package core
 
 import (
-	"gopump/common"
-	"gopump/message"
 	"sync"
 	"sync/atomic"
+
+	"github.com/tobytop/gopump/common"
+	"github.com/tobytop/gopump/message"
 
 	"github.com/gorilla/websocket"
 )

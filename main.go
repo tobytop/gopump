@@ -1,7 +1,7 @@
 package main
 
 import (
-	"gopump/core"
+	"github.com/tobytop/core"
 )
 
 func main() {
